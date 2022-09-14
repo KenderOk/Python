@@ -1,0 +1,7 @@
+rate = int(input("How much Bitcoin costs today in USD? "))
+USD = int(input("How much $ do you have? "))
+Bit = int(USD) / int(rate)
+if Bit <= 1.0:
+    print("You can buy ", Bit, "Bitcoin")
+else:
+    print("You can buy ", Bit, "Bitcoins")
