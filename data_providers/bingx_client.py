@@ -110,8 +110,8 @@ class BingXClient:
             return {"code": -1, "msg": "Request timeout"}
         except requests.exceptions.ConnectionError:
             return {"code": -1, "msg": "Connection error"}
-        except requests.exceptions.HTTPError as e:
-            return {"code": -1, "msg": f"HTTP error: {e.response.status_code}"}
+        except requests.exceptions.HTTPError:
+            return {"code": -1, "msg": "HTTP error occurred"}
         except requests.exceptions.RequestException:
             return {"code": -1, "msg": "Request failed"}
         except ValueError:
