@@ -106,10 +106,18 @@ class BingXClient:
 
             response.raise_for_status()
             return response.json()
-        except requests.exceptions.RequestException as e:
-            return {"code": -1, "msg": f"Request failed: {str(e)}"}
-        except Exception as e:
-            return {"code": -1, "msg": f"Unexpected error: {str(e)}"}
+        except requests.exceptions.Timeout:
+            return {"code": -1, "msg": "Request timeout"}
+        except requests.exceptions.ConnectionError:
+            return {"code": -1, "msg": "Connection error"}
+        except requests.exceptions.HTTPError as e:
+            return {"code": -1, "msg": f"HTTP error: {e.response.status_code}"}
+        except requests.exceptions.RequestException:
+            return {"code": -1, "msg": "Request failed"}
+        except ValueError:
+            return {"code": -1, "msg": "Invalid response format"}
+        except Exception:
+            return {"code": -1, "msg": "Unexpected error occurred"}
 
     def get_trades(
         self,
@@ -221,7 +229,7 @@ class BingXClient:
         }
         return self._request("DELETE", "/openApi/swap/v2/trade/order", params)
 
-    def cancel_stop_loss(self, symbol: str, stop_loss_id: str) -> Dict[str, Any]:
+    def cancel_stop_loss(self, symbol: str, stopLossId: str) -> Dict[str, Any]:
         """
         Cancel a stop loss order (trigger order)
         
@@ -230,14 +238,14 @@ class BingXClient:
         
         Args:
             symbol: Trading pair symbol
-            stop_loss_id: Stop loss order ID to cancel
+            stopLossId: Stop loss order ID to cancel
             
         Returns:
             API response
         """
         params = {
             "symbol": symbol,
-            "stopLossId": stop_loss_id,
+            "stopLossId": stopLossId,
         }
         # Use the correct endpoint for canceling trigger orders (stop loss/take profit)
         # The v2 endpoint is for trigger orders, not v1 or regular order endpoints

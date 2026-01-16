@@ -33,7 +33,7 @@ class TradeJournal:
             try:
                 with open(self.journal_file, "r", encoding="utf-8") as f:
                     return json.load(f)
-            except Exception:
+            except (json.JSONDecodeError, IOError, OSError):
                 return []
         return []
 
@@ -42,7 +42,7 @@ class TradeJournal:
         try:
             with open(self.journal_file, "w", encoding="utf-8") as f:
                 json.dump(self.trades, f, indent=2)
-        except Exception as e:
+        except (IOError, OSError) as e:
             print(f"Failed to save journal: {e}")
 
     def generate_trade_id(self) -> str:

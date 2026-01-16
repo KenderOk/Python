@@ -61,7 +61,7 @@ The client properly implements BingX authentication:
 ### Methods Available
 
 #### Trading Operations
-- `cancel_stop_loss(symbol, stop_loss_id)` - Cancel a specific stop loss order
+- `cancel_stop_loss(symbol, stopLossId)` - Cancel a specific stop loss order
 - `cancel_all_trigger_orders(symbol)` - Cancel all trigger orders for a symbol
 - `cancel_order(symbol, order_id)` - Cancel a normal order
 - `get_open_orders(symbol)` - Get open orders
@@ -88,7 +88,7 @@ client = BingXClient(
 # Cancel a stop loss order
 response = client.cancel_stop_loss(
     symbol="BTC-USDT",
-    stop_loss_id="12345678"
+    stopLossId="12345678"
 )
 
 # Check response
